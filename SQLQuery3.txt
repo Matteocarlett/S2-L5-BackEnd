@@ -1,0 +1,86 @@
+SELECT COUNT (*) AS [Numero verbali trascritti]
+FROM Verbale;
+
+
+SELECT a.nome , a.cognome, COUNT(*) AS [Numero verbali trascritti]
+FROM Anagrafica a
+JOIN Verbale v on
+a.IdVerbale = v.IdVerbale
+GROUP BY a.nome,a.cognome;
+
+
+SELECT t.Descrizione , COUNT (*) AS [Numero verbali trascritti]
+FROM [Tipo Violazione] t
+JOIN Verbale v on
+t.IdViolazione = v.IdViolazione
+GROUP BY t.Descrizione;
+
+
+SELECT a.Cognome, a.Nome, SUM(v.DecurtamentoPunti) AS [Totale punti decurtati]
+FROM Anagrafica a
+JOIN VERBALE v ON 
+a.IdVerbale = v.iDVerbale
+GROUP BY a.Cognome, a.Nome
+ORDER BY [Totale punti decurtati]DESC ;
+
+
+SELECT a.nome, a.cognome,v.dataviolazione,v.indirizzoviolazione,v.importo,v.decurtamentopunti
+FROM Anagrafica a
+JOIN Verbale v ON 
+a.IdVerbale = v.IdVerbale
+WHERE a.città = 'Roma';
+
+
+SELECT a.idAnagrafica, a.Nome, a.Cognome, v.DataViolazione, v.IndirizzoViolazione, v.Importo, v.DecurtamentoPunti
+
+FROM Anagrafica AS a
+JOIN Verbale AS v
+ON v.IdVerbale = A.IdVerbale
+WHERE v.DataViolazione BETWEEN '2009-02-01' AND '2009-07-01'
+ORDER BY A.Nome
+
+SELECT a.idAnagrafica, a.Nome, a.Cognome,
+SUM(v.Importo)
+AS [Totale Importo]
+FROM Anagrafica AS a
+JOIN Verbale AS v
+ON v.iDVerbale = a.IdVerbale
+GROUP BY a.idAnagrafica, a.Nome, a.Cognome
+ORDER BY a.idAnagrafica ;
+
+
+SELECT * 
+FROM Anagrafica
+WHERE Città = 'Cecina'
+ORDER BY Cognome
+
+
+
+DECLARE @Data DATE = '2009-02-09'
+
+SELECT DataViolazione, Importo, DecurtamentoPunti
+FROM Verbale
+WHERE DataViolazione = @Data
+
+
+SELECT Nominativo_Agente,
+COUNT(*) AS [Numero Verbali Fatti]
+FROM Verbale
+GROUP BY Nominativo_Agente
+ORDER BY Nominativo_Agente
+
+
+SELECT a.idAnagrafica, a.Nome, a.Cognome, a.Indirizzo, v.DataViolazione, v.Importo, v.DecurtamentoPunti
+FROM Anagrafica AS a
+JOIN Verbale AS v
+ON a.IdVerbale = v.IdVerbale
+WHERE v.DecurtamentoPunti > 5
+ORDER BY a.Nome
+
+
+SELECT a.idAnagrafica, a.Nome, a.Cognome, a.Indirizzo, v.DataViolazione, v.Importo, v.DecurtamentoPunti
+FROM Anagrafica AS a
+JOIN Verbale AS v
+ON a.IdVerbale = v.IdVerbale
+WHERE Importo > 400
+ORDER BY a.Nome
